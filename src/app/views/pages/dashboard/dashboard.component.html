@@ -1,0 +1,134 @@
+<div class="row" dir="rtl" style="text-align: right;">
+	<div class="col-xl-6">
+		<!-- row-full-height -->
+		<div class="row">
+			<div class="col-sm-12">
+				<span *ngIf="(changesHappened | async).showLiveQuestion">
+					<kt-portlet [class]="'kt-portlet--border-bottom-brand'"
+								*ngFor="let item of activeLives; let i = index">
+						<kt-portlet-header [title]="'  البث الحالي (' + item.businessName + ')'">
+						</kt-portlet-header>
+						<span class="m-3">
+							<div class="row">
+								<div class="col-xl-12" *ngIf="!item.isQuestionAnswered">
+									<h6 class="kt-widget26__number">للدخول في السحب اعمل اعجاب لصفحة الفيس بوك و
+										متابعة
+										لحساب
+										الانستجرام ثم اجب على سؤال البث</h6>
+									<p> الوقت المتبقي للاجابة: {{item.activeLiveReaminingTime}}
+										دقيقة</p>
+								</div>
+								<div class="col-xl-12" *ngIf="item.isQuestionAnswered">
+									<h6 class="kt-widget26__number">لقد قمت بالاجابة على السؤال لهذا البث، تأكد انك قمت
+										بعمل اعجاب و متابعة للصفحة للدخول بالسحب</h6>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-12">
+									<iframe [src]="item.fbFrameSrc | safe" [width]="innerWidth > 500 ? 340 : '100%'"
+											height="70" style="border:none;overflow:hidden" scrolling="no"
+											frameborder="0"
+											allowfullscreen="true"
+											allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+								</div>
+								<div class="col-sm-6">
+									<button (click)="openInstgramPage(item.instgramUrl)" mat-stroked-button
+											color="primary" type="button"
+											style="height: fit-content; margin: 10px 0 10px 10px; color: white;">
+										متابعة <i class="flaticon-instagram-logo" style="font-size: 20px;"></i></button>
+								</div>
+								<div class="col-sm-6 text-left" *ngIf="!item.isQuestionAnswered">
+									<button (click)="goToQuestion(item.id)" mat-stroked-button color="primary"
+											type="button"
+											style="height: fit-content; margin:  10px 10px 10px 0; color: white;">
+										الاجابة على سؤال اللايف <i class="flaticon-questions-circular-button"
+																   style="font-size: 20px;"></i></button>
+								</div>
+							</div>
+						</span>
+					</kt-portlet>
+				</span>
+				<span *ngIf="(changesHappened | async).showDailyQuestion">
+					<kt-portlet [class]="'kt-portlet--border-bottom-brand'">
+						<kt-portlet-header [title]="'السؤال اليومي'">
+						</kt-portlet-header>
+						<span class="m-3">
+								<div class="row">
+									<div class="col-xl-12">
+										<h6 class="kt-widget26__number">للدخول في السحب اعمل اعجاب لصفحات الفيس بوك و
+											متابعة
+											لحسابات
+											الانستجرام ثم اجب على السؤال ادناه</h6>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-6"></div>
+									<div class="col-sm-6 text-left">
+										<button (click)="goToQuestion()" mat-stroked-button color="primary"
+												type="button"
+												style="height: fit-content; margin:  10px 10px 10px 0; color: white;">
+											الاجابة على السؤال اليومي <i class="flaticon-questions-circular-button"
+																		 style="font-size: 20px;"></i></button>
+									</div>
+								</div>
+						</span>
+					</kt-portlet>
+				</span>
+			</div>
+			<div class="col-sm-12">
+				<kt-portlet [class]="'kt-portlet--height-fluid kt-portlet--border-bottom-brand'">
+					<kt-portlet-header [title]="'جدول البث لليوم'">
+						<!-- <ng-container ktPortletTools>
+							<kt-context-menu2></kt-context-menu2>
+						</ng-container> -->
+					</kt-portlet-header>
+					<kt-portlet-body>
+						<kt-timeline2 [data]="todaySchedule" *ngIf="(changesHappened | async).showSchedule">
+						</kt-timeline2>
+						<h6 class="kt-widget26__number" *ngIf="todaySchedule.length < 1">
+							لا يوجد اي بث في هذا اليوم
+						</h6>
+					</kt-portlet-body>
+				</kt-portlet>
+			</div>
+		</div>
+	</div>
+	<div class="col-xl-6">
+		<!-- kt-portlet--height-fluid -->
+		<kt-portlet [class]="'kt-portlet--border-bottom-brand'">
+			<kt-portlet-header [title]="'الصفحات الاخرى'">
+				<!-- <ng-container ktPortletTools>
+					<kt-context-menu2></kt-context-menu2>
+				</ng-container> -->
+			</kt-portlet-header>
+			<span class="m-3" *ngIf="(changesHappened | async).showOtherPagesSection">
+				<div class="row">
+					<div class="col-xl-12">
+						<h6 class="kt-widget26__number">قم بعمل اعجاب للصفحات و حسابات النستجرام التالية للدخول في
+							سحوبات اخرى</h6>
+					</div>
+				</div>
+				<div class="scrollingContainer">
+				<span *ngFor="let item of otherPages; let i = index">
+					<div class="row">
+						<div class="col-sm-12">
+							<h4>{{item.businessName}}</h4>
+							<iframe [src]="item.fbFrameSrc | safe" [width]="innerWidth > 500 ? 340 : '100%'"
+									style="max-height: 70px;border:none;overflow:hidden" scrolling="no" frameborder="0"
+									allowfullscreen="true"
+									allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+						</div>
+						<div class="col-sm-6"></div>
+						<div class="col-sm-6 text-left">
+							<button (click)="openInstgramPage(item.instagramUrl)" mat-stroked-button color="primary"
+									type="button" style="height: fit-content; margin: 10px 0 10px 10px; color: white;">
+								متابعة <i class="flaticon-instagram-logo" style="font-size: 20px;"></i></button>
+						</div>
+					</div>
+					<hr *ngIf="i < otherPages.length - 1"/>
+				</span>
+				</div>
+			</span>
+		</kt-portlet>
+	</div>
+</div>

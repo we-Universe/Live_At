@@ -1,0 +1,23 @@
+<div class="kt-portlet"
+	 dir="rtl" style="text-align: right;">
+	<div class="kt-portlet__head kt-portlet__head__custom">
+		<div class="kt-portlet__head-label">
+			<h3 class="kt-portlet__head-title">{{getTitle()}}</h3>
+		</div>
+	</div>
+	<kt-portlet-body style="overflow-x: hidden">
+		<mat-dialog-content>
+			<span *ngFor="let i of info">
+				<h4 class="kt-login__subtitle mt-3" *ngIf="i.includes('b')">
+				{{i.replace('b', '')}}
+				</h4>
+				<h6 class="kt-login__subtitle mt-1" *ngIf="!i.includes('b')">
+					{{i}}
+				</h6>
+			</span>
+		</mat-dialog-content>
+	</kt-portlet-body>
+	<mat-dialog-actions align="end">
+		<button mat-button mat-dialog-close class="m-2">اغلاق</button>
+	</mat-dialog-actions>
+</div>

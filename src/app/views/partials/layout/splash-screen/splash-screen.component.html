@@ -1,0 +1,7 @@
+<!-- splash screen -->
+<!-- TAG: Can change the logo in loading page -->
+<div #splashScreen class="kt-splash-screen" style="background-color: white;">
+	<span *ngIf="loaderType === 'spinner-message'">{{loaderMessage}}</span>
+	<img *ngIf="loaderType === 'spinner-logo'" [attr.src]="loaderLogo" alt="Logo">
+	<mat-spinner diameter="40"></mat-spinner>
+</div>

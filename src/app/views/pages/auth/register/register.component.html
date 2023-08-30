@@ -1,0 +1,257 @@
+<!--begin::Head-->
+<!--<div class="kt-login__head">-->
+<!--	<span class="kt-login__signup-label">{{!isMerchant ? 'اعلن عن صفحاتك، فيس بوك و انستجرام' : 'الاشتراك في المسابقة'}}</span>&nbsp;&nbsp;-->
+<!--	<a href="javascript:;" class="kt-link kt-login__signup-link" (click)="isMerchant = !isMerchant">{{!isMerchant ?-->
+<!--        'سجل' : 'اشترك'}}</a>-->
+<!--</div>-->
+<!--end::Head-->
+
+<!--begin::Body-->
+<div class="kt-login__body text-right">
+	<!--begin::Signin-->
+	<div class="kt-login__form">
+		<div class="kt-login__title">
+			<h3>{{isMerchant ? 'الاشتراك كمعلن في مسابقة لايفات' : 'الاشتراك في المسابقة'}}</h3>
+		</div>
+
+		<kt-auth-notice></kt-auth-notice>
+
+		<form class="kt-login__form kt-form" [formGroup]="registerForm" autocomplete="off" dir="rtl"
+		*ngIf = "active | async"
+			  style="text-align: right;">
+			<span *ngIf="isMerchant">
+				<div class="form-group">
+					<mat-form-field>
+						<mat-label>الاسم الرباعي</mat-label>
+						<input matInput type="text" placeholder="الاسم الرباعي" formControlName="fullname"/>
+						<mat-error *ngIf="isControlHasError('fullname','required')">
+							<strong>الرجاء ادخال الاسم الرباعي</strong>
+						</mat-error>
+					</mat-form-field>
+				</div>
+				<div class="form-group">
+					<mat-form-field>
+						<mat-label> رقم الهاتف المحمول / التلفون</mat-label>
+						<input matInput type="text" placeholder="رقم الهاتف المحمول"
+						formControlName="mobileNumber"
+							   autocomplete="off"/>
+						<mat-error *ngIf="isControlHasError('mobileNumber','required')">
+							<strong>الرجاء ادخال رقم الهاتف المحمول</strong>
+						</mat-error>
+						<mat-error *ngIf="isControlHasError('mobileNumber','pattern')">
+							<strong>يجب على رقم الهاتف المحمول ان يتكون من ارقام فقط</strong>
+						</mat-error>
+						<mat-error
+							*ngIf="isControlHasError('mobileNumber','minlength') && !isControlHasError('mobileNumber','pattern')">
+							<strong>يجب على رقم الهاتف المحمول ان يتكون على الاقل من 9 خانات</strong>
+						</mat-error>
+						<mat-error
+							*ngIf="isControlHasError('mobileNumber','maxlength') && !isControlHasError('mobileNumber','pattern')">
+							<strong>يجب على رقم الهاتف المحمول ان يتكون على الاكثر من 14 خانة</strong>
+						</mat-error>
+					</mat-form-field>
+				</div>
+				<div class="form-group">
+					<mat-form-field>
+						<mat-label>الايميل</mat-label>
+						<input matInput type="email" placeholder="الايميل" formControlName="email" autocomplete="off"/>
+						<mat-error *ngIf="isControlHasError('email','required')">
+							<strong>الرجاء ادخال الايميل</strong>
+						</mat-error>
+						<mat-error *ngIf="isControlHasError('email','email')">
+							<strong>الرجاء ادخال ايميل صحيح</strong>
+						</mat-error>
+					</mat-form-field>
+				</div>
+				<div class="form-group">
+					<mat-form-field>
+						<mat-label>اسم المحل</mat-label>
+						<input matInput type="text" placeholder="اسم المحل" formControlName="storeName"
+							   autocomplete="off"/>
+						<mat-error *ngIf="isControlHasError('storeName','required')">
+							<strong>الرجاء ادخال اسم المحل</strong>
+						</mat-error>
+					</mat-form-field>
+				</div>
+				<div class="form-group">
+					<mat-form-field>
+						<mat-label>رابط صفحة الفيس بوك</mat-label>
+						<input matInput type="text" placeholder="رابط الفيس بوك" formControlName="fbUrl"
+							   autocomplete="off"/>
+						<mat-error *ngIf="isControlHasError('fbUrl','required')">
+							<strong>الرجاء ادخال رابط صفحة الفيس بوك</strong>
+						</mat-error>
+					</mat-form-field>
+				</div>
+				<div class="form-group">
+					<mat-form-field>
+						<mat-label>رابط حساب الانستجرام</mat-label>
+						<input matInput type="text" placeholder="رابط الانستجرام" formControlName="insUrl"
+							   autocomplete="off"/>
+						<mat-error *ngIf="isControlHasError('insUrl','required')">
+							<strong>الرجاء ادخال رابط حساب الانستجرام</strong>
+						</mat-error>
+					</mat-form-field>
+				</div>
+				<div class="form-group">
+					<mat-form-field>
+						<mat-label>تصنيف المحل و اختصاصه</mat-label>
+						<input matInput type="text" placeholder="تصنيف المحل و اختصاصه" formControlName="storeType"
+							   autocomplete="off"/>
+						<mat-error *ngIf="isControlHasError('storeType','required')">
+							<strong>الرجاء ادخال تصنيف المحل و اختصاصه</strong>
+						</mat-error>
+					</mat-form-field>
+				</div>
+				<div class="form-group">
+					<mat-form-field>
+						<mat-label>تعريف بالمحل و ساعات الدوام (بالامكان اضافة رابط فيديو)</mat-label>
+						<textarea matInput type="text" placeholder="تعريف المحل" formControlName="storeIntro"
+								  autocomplete="off"></textarea>
+						<mat-error *ngIf="isControlHasError('storeIntro','required')">
+							<strong>الرجاء ادخال تعريف المحل</strong>
+						</mat-error>
+					</mat-form-field>
+				</div>
+				<!-- <div class="form-group">
+					<mat-form-field>
+						<mat-label>Username</mat-label>
+						<input matInput type="text" placeholder="Username" formControlName="username" />
+						<mat-error *ngIf="isControlHasError('username','required')">
+							<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+						</mat-error>
+						<mat-error *ngIf="isControlHasError('username','minlength')">
+							<strong>{{ 'AUTH.VALIDATION.MIN_LENGTH_FIELD' | translate }} 3</strong>
+						</mat-error>
+						<mat-error *ngIf="isControlHasError('username','maxlength')">
+							<strong>{{ 'AUTH.VALIDATION.MAX_LENGTH_FIELD' | translate }} 100</strong>
+						</mat-error>
+					</mat-form-field>
+				</div>
+				<div class="form-group">
+					<mat-form-field>
+						<mat-label>{{ 'AUTH.INPUT.PASSWORD' | translate }}</mat-label>
+						<input matInput type="password" placeholder="{{ 'AUTH.INPUT.PASSWORD' | translate }}"
+							formControlName="password" autocomplete="off" />
+						<mat-error *ngIf="isControlHasError('password','required')">
+							<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+						</mat-error>
+						<mat-error *ngIf="isControlHasError('password','minlength')">
+							<strong>{{ 'AUTH.VALIDATION.MIN_LENGTH_FIELD' | translate }} 3</strong>
+						</mat-error>
+						<mat-error *ngIf="isControlHasError('password','maxlength')">
+							<strong>{{ 'AUTH.VALIDATION.MAX_LENGTH_FIELD' | translate }} 100</strong>
+						</mat-error>
+					</mat-form-field>
+				</div>
+				<div class="form-group">
+					<mat-form-field>
+						<mat-label>{{ 'AUTH.INPUT.CONFIRM_PASSWORD' | translate }}</mat-label>
+						<input matInput type="password" placeholder="{{ 'AUTH.INPUT.CONFIRM_PASSWORD' | translate }}"
+							formControlName="confirmPassword" autocomplete="off" />
+						<mat-error *ngIf="isControlHasError('confirmPassword','required')">
+							<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+						</mat-error>
+						<mat-error *ngIf="isControlHasError('confirmPassword','minlength')">
+							<strong>{{ 'AUTH.VALIDATION.MIN_LENGTH_FIELD' | translate }} 3</strong>
+						</mat-error>
+						<mat-error *ngIf="isControlHasError('confirmPassword','maxlength')">
+							<strong>{{ 'AUTH.VALIDATION.MAX_LENGTH_FIELD' | translate }} 100</strong>
+						</mat-error>
+						<mat-error
+							*ngIf="registerForm.get('confirmPassword').errors && registerForm.get('confirmPassword').errors.ConfirmPassword">
+							<strong>Passsword and ConfirmPassword didn't match.</strong>
+						</mat-error>
+					</mat-form-field>
+				</div> -->
+				<div class="form-group">
+					<!-- <mat-checkbox name="agree" formControlName="agree">
+						I agree the <a href="javascript:;">terms & conditions</a>
+					</mat-checkbox> -->
+					<mat-label>الرجاء اختيار نوع الاشتراك</mat-label>
+					<mat-radio-group aria-label="الرجاء اختيار نوع الاشتراك" formControlName="merchantSubscriptionType">
+						<mat-radio-button value="withLives">مع لايفات</mat-radio-button>
+						<mat-radio-button value="withoutLives">بدون لايفات</mat-radio-button>
+					</mat-radio-group>
+				</div>
+			</span>
+
+			<span *ngIf="!isMerchant">
+				<mat-form-field *ngIf="!((dataChanged | async).isPinSent)">
+					<mat-label>رقم الهاتف المحمول</mat-label>
+					<input matInput type="text" placeholder="رقم الهاتف المحمول" formControlName="mobileNumber"
+						   autocomplete="off"/>
+					<mat-error *ngIf="isControlHasError('mobileNumber','required')">
+						<strong>الرجاء ادخال رقم الهاتف المحمول</strong>
+					</mat-error>
+					<mat-error *ngIf="isControlHasError('mobileNumber','pattern')">
+						<strong>يجب على رقم الهاتف المحمول ان يتكون من ارقام فقط</strong>
+					</mat-error>
+					<mat-error
+						*ngIf="isControlHasError('mobileNumber','minlength') && !isControlHasError('mobileNumber','pattern')">
+						<strong>يجب على رقم الهاتف المحمول ان يتكون على الاقل من 9 خانات</strong>
+					</mat-error>
+					<mat-error
+						*ngIf="isControlHasError('mobileNumber','maxlength') && !isControlHasError('mobileNumber','pattern')">
+						<strong>يجب على رقم الهاتف المحمول ان يتكون على الاكثر من 14 خانة</strong>
+					</mat-error>
+				</mat-form-field>
+				<mat-form-field *ngIf="!((dataChanged | async).isPinSent)">
+					<mat-label>المشغل</mat-label>
+					<mat-select placeholder="المشغل" formControlName="operator">
+						<mat-option value="JW">
+							جوال
+						</mat-option>
+						<mat-option value="WM">
+							اورييدو
+						</mat-option>
+						<mat-option value="Other">
+							غيره
+						</mat-option>
+					</mat-select>
+					<mat-error *ngIf="isControlHasError('operator','required')">
+						<strong>الرجاء ادخال المشغل</strong>
+					</mat-error>
+				</mat-form-field>
+				<mat-form-field *ngIf="(dataChanged | async).isPinSent">
+					<mat-label>رمز الاشتراك</mat-label>
+					<input matInput type="text" placeholder="رمز الاشتراك" formControlName="pinCode"
+						   autocomplete="off"/>
+					<mat-error *ngIf="isControlHasError('pinCode','required')">
+						<strong>الرجاء ادخال رمز الاشتراك</strong>
+					</mat-error>
+					<mat-error *ngIf="isControlHasError('pinCode','pattern')">
+						<strong>يجب على رمز الاشتراك ان يتكون من ارقام فقط</strong>
+					</mat-error>
+					<mat-error
+						*ngIf="(isControlHasError('pinCode','minlength') || isControlHasError('pinCode','maxlength')) && !isControlHasError('pinCode','pattern')">
+						<strong>يجب على رمز الاشتراك ان يتكون من 4 خانات</strong>
+					</mat-error>
+				</mat-form-field>
+			</span>
+			<!--begin::Action-->
+			<div class="kt-login__actions">
+				<button type="button" *ngIf="!((dataChanged | async).isPinSent) || isMerchant" routerLink="/auth/login"
+						[disabled]="loading"
+						id="kt_login_signup_cancel" class="btn btn-secondary btn-elevate kt-login__btn-secondary">رجوع
+				</button>
+				<button type="button" *ngIf="((dataChanged | async).isPinSent) && !isMerchant"
+						(click)="dataChanged.next({isPinSent: false, subId: this.subscriptionId})" [disabled]="loading"
+						id="kt_login_signup_cancel" class="btn btn-secondary btn-elevate kt-login__btn-secondary">رجوع
+				</button>
+				<button type="submit" *ngIf="!((dataChanged | async).isPinSent) && !isMerchant" (click)="sendPinCode()"
+						id="kt_login_signin_submit" class="btn btn-primary btn-elevate kt-login__btn-primary"
+						[ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}"
+						[disabled]="loading">اشترك
+				</button>
+				<button type="submit" *ngIf="((dataChanged | async).isPinSent) || isMerchant" (click)="submit()"
+						id="kt_login_signin_submit"
+						class="btn btn-primary btn-elevate kt-login__btn-primary"
+						[ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}"
+						[disabled]="loading">تأكيد
+				</button>
+			</div>
+			<!--end::Action-->
+		</form>
+	</div>
+</div>

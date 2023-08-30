@@ -1,0 +1,59 @@
+<div
+	class="kt-grid kt-grid--hor kt-grid--root kt-login kt-login--v1" id="kt_login" dir="rtl"
+	style="background-color: white">
+	<div
+		class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--desktop kt-grid--ver-desktop kt-grid--hor-tablet-and-mobile">
+		<!--begin::Aside-->
+		<div
+			style="border-top-left-radius: 20px"
+			class="kt-grid__item kt-grid__item--order-tablet-and-mobile-2 kt-grid kt-grid--hor kt-login__aside l-background">
+			<!--			<div class="kt-grid__item">-->
+			<!--				<a href="javascript:;" class="kt-login__logo">-->
+			<!--					<img src="./assets/media/logos/funny-gas-jockey.jpg" height="100" width="100" style="border-radius: 50%;" alt="">-->
+			<!--				</a>-->
+			<!--			</div>-->
+			<div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver">
+				<div class="kt-grid__item kt-grid__item--middle text-right">
+					<h3 class="kt-login__title">اهلا بك في لايفات</h3>
+					<h4 class="kt-login__subtitle">
+						تمنحك منصة لايفات الامكانية لمتابعة اشهر صفحات الفيس بوك و الانستجرام بالاضافة لفرصة الدخول
+						للسحب على العديد من الجوائز و ذلك من خلال الاجابة على الاسئلة التي ستعرض خلال اللايفات و ايضا
+						الاسئلة اليومية.
+						للاستفادة من المسابقة، على المشترك أن يمتلك حساب على الفيس بوك و الانستجرام
+					</h4>
+					<h3 class="kt-login__title">خلي عينك عاللايف</h3>
+				</div>
+			</div>
+			<div class="kt-grid__item">
+				<div class="kt-login__info">
+					<div class="kt-login__menu">
+						<a href="javascript:;" class="kt-link" (click)="openInfoDialog()">الشروط</a>
+					</div>
+					<div class="kt-login__menu">
+						<a href="https://www.facebook.com/Live.aat" target="_blank" class="kt-link ml-2">
+							<i class="fab fa-facebook" style="width: 15px; height: 15px;"></i> فيس بوك
+						</a>
+						<a href="https://instagram.com/live.aat?igshid=vhq71gtgd2at" target="_blank" class="kt-link">
+							<i class="fab fa-instagram" style="width: 15px; height: 15px"></i> انستجرام
+						</a>
+					</div>
+				</div>
+				<div class="kt-login__info">
+					<div class="kt-login__copyright" style="font-weight: bold">
+						لايفات © {{today|date:'yyyy'}}
+					</div>
+					<div class="kt-login__copyright" style="font-weight: bold">
+						<i class="fab fa-whatsapp"></i>  تواصل معنا: 972592403202+
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--begin::Aside-->
+
+		<!--begin::Content-->
+		<div class="kt-grid__item kt-grid__item--fluid  kt-grid__item--order-tablet-and-mobile-1 kt-login__wrapper">
+			<router-outlet></router-outlet>
+		</div>
+		<!--end::Content-->
+	</div>
+</div>

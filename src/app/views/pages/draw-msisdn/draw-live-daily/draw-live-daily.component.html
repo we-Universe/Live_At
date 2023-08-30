@@ -1,0 +1,111 @@
+<div class="row">
+	<div class="col-xl-12">
+		<kt-portlet [class]="'kt-portlet--height-fluid'">
+			<kt-portlet-header [class]="'kt-portlet__head--lg'">
+				<!-- PORTLET LOADING | Binded to TABLE Datasource -->
+		
+				<ng-container ktPortletTitle>
+					<h3 class="kt-portlet__head-title">
+						<span>القرعه</span>
+					</h3>
+				</ng-container>
+			</kt-portlet-header>
+			<br/>
+			<kt-portlet-body [class]="'kt-portlet__body--fit'">
+				<div class="row">
+
+					<div class="col-sm-4">
+						<mat-form-field style="width: 90%;">
+							<mat-select placeholder="نوع السحب" [(ngModel)]="drawType" >
+							  <mat-option value="live" >Live</mat-option>
+							  <mat-option value="daily" >Daily</mat-option>
+							</mat-select>
+							<mat-hint align="start">
+								اختر <strong>نوع السحب</strong>
+							</mat-hint>
+						  </mat-form-field>
+					</div>
+
+					<div class="col-sm-4" *ngIf="drawType === 'live'">
+						<mat-form-field style="width: 90%;">
+							<mat-select placeholder="صاحب البث" [(ngModel)]="merchantId">
+								<mat-option [value]="merchant.id" *ngFor="let merchant of merchants">
+									{{merchant.name}}</mat-option>
+							</mat-select>
+							<mat-error>الرجاء ادخال
+								<strong>صاحب البث</strong>
+							</mat-error>
+							<mat-hint align="start">
+								<strong>صاحب البث</strong>
+							</mat-hint>
+						</mat-form-field>
+					</div>
+
+					<div class="col-sm-4" *ngIf="drawType === 'daily'">
+						<div class="kt-form__control">
+							<mat-form-field class="mat-form-field-fluid" style="width:90%">
+								<input matInput type="datetime-local" [(ngModel)]="dateFrom" name="dateFrom" required
+									   style="color: black;">
+								<mat-hint align="start">
+									اختر <strong>بداية الفترة</strong>
+								</mat-hint>
+							</mat-form-field>
+						</div>
+					</div>
+
+					<div class="col-sm-4" *ngIf="drawType === 'daily'">
+						<div class="kt-form__control">
+							<mat-form-field class="mat-form-field-fluid" style="width:90%">
+								<input matInput type="datetime-local" [(ngModel)]="dateTo" name="dateTo" required
+									   style="color: black;">
+								<mat-hint align="start">
+									اختر <strong>نهاية الفترة</strong>
+								</mat-hint>
+							</mat-form-field>
+						</div>
+					</div>
+				</div>
+				<br/>
+				<br/>
+				<div class="row">
+					<div class="col-sm-4">
+						<mat-form-field style="width:90%">
+							<input matInput placeholder="عدد الفائزين" [(ngModel)]="numberOfWinner" type="number">
+							<mat-hint align="start">
+								ادخل <strong>عدد الفائزين</strong>
+							</mat-hint>
+						</mat-form-field>
+					</div>
+					<div class="col-sm-4" *ngIf="drawType === 'daily'">
+						<mat-form-field style="width:90%">
+							<input matInput placeholder="عدد الاجابات" [(ngModel)]="numberOfAnswers" type="number">
+							<mat-hint align="start">
+								ادخل <strong>عدد الاجابات</strong>
+							</mat-hint>
+						</mat-form-field>
+					</div>
+				</div>
+			
+				<br/>
+				<br/>
+
+
+				<div class="row" dir="ltr">
+					<div class="col-12" >
+						<button (click)="drawNow()" mat-raised-button matTooltip="" color="primary" *ngIf="!(isLoadingResultsEmitter$ | async)"
+						type="button" style="margin-left: 10px;">
+							<span>اسحب الآن</span>
+						</button>
+						<mat-spinner *ngIf="isLoadingResultsEmitter$ | async" style="margin-right: 10px;margin-right: 20px; display: inline-block;" class="custom-spinner" diameter="20"></mat-spinner>
+						<button (click)="resetData()" mat-raised-button matTooltip="" color="primary"
+							type="button" style="margin-left: 10px; display: inline-block;">
+						<span>اعادة الضبط</span>
+						</button>
+					</div>
+				</div>
+				<br/>
+				<br/>
+			</kt-portlet-body>
+		</kt-portlet>
+	</div>
+</div>

@@ -1,0 +1,151 @@
+
+body {
+	margin: 0;
+	padding: 0;
+	font-family: 'Open Sans', sans-serif;
+	// background-color: rgb(235, 226, 209);
+	min-height: 100vh;
+	position: relative;
+	background-image: url('https://drive.google.com/uc?export=view&id=1FPlHdNoN10w3fgk071JUtmt1n54YJ7fI');
+	// https://drive.google.com/file/d/1FPlHdNoN10w3fgk071JUtmt1n54YJ7fI/view?usp=sharing
+	// background-repeat:repeat;
+	// background-color: white;
+	// background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.position {
+	position: relative;
+	margin: auto;
+}
+
+
+h1 {
+	text-align: center;
+	color: white; /*#F0AD548*/
+	text-shadow: 1px 1px 1px #000;
+	font-family: 'Chewy';
+	font-size: 50px;
+	margin-bottom: 30px;
+}
+
+
+.container:before {
+	content: "";
+	position: absolute;
+	background: inherit;
+	z-index: -1;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	box-shadow: inset 0 0 2000px rgba(255, 255, 255, .5);
+	filter: blur(10px);
+	margin: -20px;
+}
+
+
+.wrapper {
+	margin-top: 10px;
+	background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" ><defs><linearGradient id="Gradient" x1="0" x2="100%" y1="0" y2="100%" gradientUnits="userSpaceOnUse"><stop stop-color="%23546CE8" offset="0%"/><stop stop-color="%23FA353A" offset="15%"/><stop stop-color="%23FA353A" offset="50%"/><stop stop-color="%23FA353A" offset="65%"/><stop stop-color="%23546CE8" offset="80%"/><stop stop-color="%23FA353A" offset="90%"/><stop stop-color="%23FA353A" offset="100%"/> </linearGradient></defs><rect x="5" y="5" width="100%" height="100%" style="height:calc(100% - 10px);width:calc(100% - 10px)" rx="20" ry="20" stroke-width="1" fill="transparent" stroke="url(%23Gradient)"/></svg>');
+	overflow: hidden;
+	padding: 20px;
+	border-radius: 20px;
+	// box-shadow: 5px 5px 5px white;
+}
+
+.wrapper .ball {
+	
+	width: 70px;
+	height: 70px;
+	text-align: center;
+	line-height: 75px;
+	font-size: 40px;
+	color: white;
+	border-radius: 100%;
+	// background-color: rgb(252, 252, 252);
+	margin: 12px;
+	font-weight: 500;
+	font-family: 'Oranienbaum';
+	// box-shadow: 1px 1px 0.5px #000;
+}
+
+@media (max-width: 1200px) {
+	.wrapper .ball {
+		margin: 7px;
+	}
+}
+
+@media (max-width: 992px) {
+	.wrapper .ball {
+		margin: 10px;
+	}
+}
+
+@media (max-width: 770px) {
+	.wrapper .ball {
+		margin: 2px;
+	}
+}
+
+@media (max-width: 550px) {
+	.wrapper .ball {
+		margin: 0px;
+		width: 35px;
+		height: 35px;
+		text-align: center;
+		line-height: 35px;
+		font-size: 20px;
+	}
+}
+
+#generate {
+	cursor: pointer;
+	display: block;
+	// background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" ><defs><linearGradient id="Gradient" x1="0" x2="100%" y1="0" y2="100%" gradientUnits="userSpaceOnUse"><stop stop-color="%23546CE8" offset="0%"/><stop stop-color="%23FA353A" offset="15%"/><stop stop-color="%23FA353A" offset="50%"/><stop stop-color="%23FA353A" offset="65%"/><stop stop-color="%23546CE8" offset="80%"/><stop stop-color="%23FA353A" offset="90%"/><stop stop-color="%23FA353A" offset="100%"/> </linearGradient></defs><rect x="5" y="5" width="100%" height="100%" style="height:calc(100% - 10px);width:calc(100% - 10px)" rx="20" ry="20" stroke-width="1" fill="transparent" stroke="url(%23Gradient)"/></svg>');
+	outline: none;
+	padding: 15px;
+	border-radius: 10px;
+	font-size: 20px;
+	margin: 20px auto;
+	width: 120px;
+	// box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+	text-transform: uppercase;
+	font-family: 'Oranienbaum';
+	color: white
+}
+
+#history {
+	margin-top: 0px;
+	text-align: center;
+	height: 450px;
+	padding: 20px 0;
+	border-radius: 20px;
+	background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" ><defs><linearGradient id="Gradient" x1="0" x2="100%" y1="0" y2="100%" gradientUnits="userSpaceOnUse"><stop stop-color="%23546CE8" offset="0%"/><stop stop-color="%23FA353A" offset="15%"/><stop stop-color="%23FA353A" offset="50%"/><stop stop-color="%23FA353A" offset="65%"/><stop stop-color="%23546CE8" offset="80%"/><stop stop-color="%23FA353A" offset="90%"/><stop stop-color="%23FA353A" offset="100%"/> </linearGradient></defs><rect x="5" y="5" width="100%" height="100%" style="height:calc(100% - 10px);width:calc(100% - 10px)" rx="20" ry="20" stroke-width="1" fill="transparent" stroke="url(%23Gradient)"/></svg>');
+	// box-shadow: 5px 5px 5px white;
+	overflow: hidden;
+}
+
+#history p {
+	font-weight: 500;
+	font-size: 25px;
+	color: white;
+	background-color: white;
+	box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+	animation: move 1s ease;
+}
+
+@keyframes move {
+	0% {
+		transform: translateX(-100%);
+	}
+
+	50% {
+		transform: translateX(200px);
+	}
+
+	100% {
+		transform: translateX(0px);
+	}
+}

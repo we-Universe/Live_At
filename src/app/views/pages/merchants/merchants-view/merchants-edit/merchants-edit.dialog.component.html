@@ -1,0 +1,177 @@
+<div class="kt-portlet" [ngClass]="{ 'kt-portlet--body-progress kt-portlet--body-progress-overlay' : viewLoading }"
+	dir="rtl" style="text-align: right;">
+	<div class="kt-portlet__head kt-portlet__head__custom">
+		<div class="kt-portlet__head-label">
+			<h3 class="kt-portlet__head-title">{{getTitle()}}</h3>
+		</div>
+	</div>
+	<form class="kt-form" [formGroup]="merchantForm">
+		<div class="kt-portlet__body">
+
+			<div class="kt-portlet__body-progress">
+				<mat-spinner [diameter]="20"></mat-spinner>
+			</div>
+
+			<kt-alert *ngIf="hasFormErrors" type="warn" [duration]="10000" [showCloseButton]="true"
+				(close)="onAlertClose($event)">
+				الرجاء تصحيح الأخطاء والمحاولة مجددا
+			</kt-alert>
+
+			<div class="form-group kt-form__group row">
+
+				<div class="form-group col-lg-4 kt-margin-bottom-10-mobile">
+					<mat-form-field>
+						<mat-label>الاسم الرباعي</mat-label>
+						<input matInput type="text" placeholder="الاسم الرباعي" formControlName="fullname" />
+						<mat-error *ngIf="isControlHasError('fullname','required')">
+							<strong>الرجاء ادخال الاسم الرباعي</strong>
+						</mat-error>
+					</mat-form-field>
+				</div>
+				<!-- *ngIf="this.userMerchants.id < 1" -->
+				<div class="form-group col-lg-4 kt-margin-bottom-10-mobile">
+					<mat-form-field>
+						<mat-label> رقم الهاتف المحمول / التلفون</mat-label>
+						<input matInput type="text" placeholder="رقم الهاتف المحمول" formControlName="mobileNumber"
+							autocomplete="off" />
+						<mat-error *ngIf="isControlHasError('mobileNumber','required')">
+							<strong>الرجاء ادخال رقم الهاتف المحمول</strong>
+						</mat-error>
+						<mat-error *ngIf="isControlHasError('mobileNumber','pattern')">
+							<strong>يجب على رقم الهاتف المحمول ان يتكون من ارقام فقط</strong>
+						</mat-error>
+						<mat-error
+							*ngIf="isControlHasError('mobileNumber','minlength') && !isControlHasError('mobileNumber','pattern')">
+							<strong>يجب على رقم الهاتف المحمول ان يتكون على الاقل من 9 خانات</strong>
+						</mat-error>
+						<mat-error
+							*ngIf="isControlHasError('mobileNumber','maxlength') && !isControlHasError('mobileNumber','pattern')">
+							<strong>يجب على رقم الهاتف المحمول ان يتكون على الاكثر من 14 خانة</strong>
+						</mat-error>
+					</mat-form-field>
+				</div>
+				<div class="form-group col-lg-4 kt-margin-bottom-10-mobile">
+					<mat-form-field>
+						<mat-label>الايميل</mat-label>
+						<input matInput type="email" placeholder="الايميل" formControlName="email" autocomplete="off" />
+						<mat-error *ngIf="isControlHasError('email','required')">
+							<strong>الرجاء ادخال الايميل</strong>
+						</mat-error>
+						<mat-error *ngIf="isControlHasError('email','email')">
+							<strong>الرجاء ادخال ايميل صحيح</strong>
+						</mat-error>
+					</mat-form-field>
+				</div>
+				<div class="form-group col-lg-4 kt-margin-bottom-10-mobile">
+					<mat-form-field>
+						<mat-label>اسم المحل</mat-label>
+						<input matInput type="text" placeholder="اسم المحل" formControlName="storeName"
+							autocomplete="off" />
+						<mat-error *ngIf="isControlHasError('storeName','required')">
+							<strong>الرجاء ادخال اسم المحل</strong>
+						</mat-error>
+					</mat-form-field>
+				</div>
+				<div class="form-group col-lg-4 kt-margin-bottom-10-mobile">
+					<mat-form-field>
+						<mat-label>رابط صفحة الفيس بوك</mat-label>
+						<input matInput type="text" placeholder="رابط الفيس بوك" formControlName="fbUrl"
+							autocomplete="off" />
+						<mat-error *ngIf="isControlHasError('fbUrl','required')">
+							<strong>الرجاء ادخال رابط صفحة الفيس بوك</strong>
+						</mat-error>
+					</mat-form-field>
+				</div>
+				<div class="form-group col-lg-4 kt-margin-bottom-10-mobile">
+					<mat-form-field>
+						<mat-label>رابط حساب الانستجرام</mat-label>
+						<input matInput type="text" placeholder="رابط الانستجرام" formControlName="insUrl"
+							autocomplete="off" />
+						<mat-error *ngIf="isControlHasError('insUrl','required')">
+							<strong>الرجاء ادخال رابط حساب الانستجرام</strong>
+						</mat-error>
+					</mat-form-field>
+				</div>
+				<div class="form-group col-lg-4 kt-margin-bottom-10-mobile">
+					<mat-form-field>
+						<mat-label>تصنيف المحل و اختصاصه</mat-label>
+						<input matInput type="text" placeholder="تصنيف المحل و اختصاصه" formControlName="storeType"
+							autocomplete="off" />
+						<mat-error *ngIf="isControlHasError('storeType','required')">
+							<strong>الرجاء ادخال تصنيف المحل و اختصاصه</strong>
+						</mat-error>
+					</mat-form-field>
+				</div>
+				<div class="form-group col-lg-4 kt-margin-bottom-10-mobile">
+					<mat-form-field>
+						<mat-label>تعريف بالمحل و ساعات الدوام (بالامكان اضافة رابط فيديو)</mat-label>
+						<textarea matInput type="text" placeholder="تعريف المحل" formControlName="storeIntro"
+							autocomplete="off"></textarea>
+						<mat-error *ngIf="isControlHasError('storeIntro','required')">
+							<strong>الرجاء ادخال تعريف المحل</strong>
+						</mat-error>
+					</mat-form-field>
+				</div>
+				<div class="form-group col-lg-4 kt-margin-bottom-10-mobile">
+					<mat-form-field aria-label="الرجاء اختيار نوع الاشتراك">
+						<mat-select placeholder="نوع الاشتراك" formControlName="merchantSubscriptionType">
+							<mat-option value="withLives">مع لايفات</mat-option>
+							<mat-option value="withoutLives">بدون لايفات</mat-option>
+						</mat-select>
+						<mat-error *ngIf="isControlHasError('merchantSubscriptionType','required')">
+							<strong>الرجاء اختيار نوع الاشتراك</strong>
+						</mat-error>
+					</mat-form-field>
+
+					<!-- <mat-radio-group aria-label="الرجاء اختيار نوع الاشتراك" formControlName="merchantSubscriptionType">
+						<mat-radio-button value="withLives">مع لايفات</mat-radio-button>
+						<mat-radio-button value="withoutLives">بدون لايفات</mat-radio-button>
+					</mat-radio-group> -->
+				</div>
+
+				<div class="form-group col-lg-4 kt-margin-bottom-10-mobile">
+					<mat-form-field class="mat-form-field-fluid">
+						<mat-select placeholder="حالة التاجر" formControlName="isActive">
+							<mat-option [value]="true">
+								فعال
+							</mat-option>
+							<mat-option [value]="false">
+								غير فعال
+							</mat-option>
+						</mat-select>
+						<mat-error>الرجاء اختيار
+							<strong>حالة التاجر</strong>
+						</mat-error>
+						<mat-hint align="start">
+							<strong>حالة التاجر</strong>
+						</mat-hint>
+					</mat-form-field>
+
+
+
+
+					<!-- <mat-radio-group aria-label="الرجاء اختيار نوع الاشتراك" formControlName="isActive">
+						<mat-radio-button value="true">true</mat-radio-button>
+						<mat-radio-button value="false">false</mat-radio-button>
+					</mat-radio-group> -->
+				</div>
+			</div>
+			<!-- <div class="kt-separator kt-separator--dashed"></div> -->
+		</div>
+		<div class="kt-portlet__foot kt-portlet__no-border kt-portlet__foot--fit">
+			<div class="kt-form__actions kt-form__actions--solid p-3">
+				<div class="row text-left">
+					<div class="col-lg-12">
+						<button type="button" style="margin: 5px; min-width: 60px;" class="btn btn-outline-danger"
+							mat-dialog-close cdkFocusInitial>الغاء
+						</button>
+						<button type="button" style="margin: 5px; min-width: 60px;" class="btn btn-primary"
+							(click)="onSubmit()" [disabled]="viewLoading" matTooltip="{{getTitle()}}">
+							تأكيد
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>

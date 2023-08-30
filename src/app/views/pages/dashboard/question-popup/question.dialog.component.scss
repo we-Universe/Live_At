@@ -1,0 +1,134 @@
+.customQuestionContainer {
+	margin: 20px auto;
+	//max-width: 800px;
+	text-align: center;
+	width: 90%;
+	height: fit-content;
+	background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" ><defs><linearGradient id="Gradient" x1="0" x2="100%" y1="0" y2="100%" gradientUnits="userSpaceOnUse"><stop stop-color="%23546CE8" offset="0%"/><stop stop-color="%23FA353A" offset="15%"/><stop stop-color="%23FA353A" offset="50%"/><stop stop-color="%23FA353A" offset="65%"/><stop stop-color="%23546CE8" offset="80%"/><stop stop-color="%23FA353A" offset="90%"/><stop stop-color="%23FA353A" offset="100%"/> </linearGradient></defs><rect x="5" y="5" width="100%" height="100%" style="height:calc(100% - 10px);width:calc(100% - 10px)" rx="20" ry="20" stroke-width="1" fill="transparent" stroke="url(%23Gradient)"/></svg>');
+	color: white;
+	border-radius: 20px;
+	padding: 4px;
+	//animation-name: spin;
+	//animation-duration: 1000ms;
+	//animation-timing-function: linear;
+	animation: fadeIn ease 4s;
+	-webkit-animation: fadeIn ease 4s;
+	-moz-animation: fadeIn ease 4s;
+	-o-animation: fadeIn ease 4s;
+	-ms-animation: fadeIn ease 4s;
+}
+
+@keyframes spin {
+	0% {
+		transform: rotateY(270deg);
+	}
+
+	100% {
+		transform: rotateY(360deg);
+	}
+}
+
+@keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+
+@-moz-keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+
+@-webkit-keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+
+@-o-keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+
+@-ms-keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+
+
+.customQuestionContainer .questionSection {
+	padding: 10px 10px 10px 30px !important;
+	margin: 40px auto 50px auto !important;
+}
+
+.customQuestionContainer p {
+	color: black;
+	font-size: 18px;
+	text-align: right;
+	margin: 20px 10px;
+}
+
+.customQuestionContainer button {
+	margin: auto;
+	border-radius: 5px;
+	width: 90%;
+	min-height: 45px;
+	text-align: center;
+	padding: 5px;
+	font-size: 15px;
+	white-space: pre-wrap !important;
+}
+
+@media only screen and (max-width: 599px) {
+	.customQuestionContainer .questionSection {
+		padding: 10px 10px 10px 10px !important;
+		margin: 10px 10px 10px 10px !important;
+	}
+
+	.customQuestionContainer button {
+		font-size: 14px;
+	}
+}
+
+@media only screen and (max-width: 599px) {
+	.customQuestionContainer p {
+		font-size: 18px;
+		text-align: right;
+		margin: -5px 10px 5px 10px;
+	}
+
+	.customQuestionContainer .questionsNumbers {
+		overflow: hidden;
+		float: none;
+		height: fit-content;
+		width: 100%;
+		background: linear-gradient(to right, #2D4284, #128979);
+		border-top-right-radius: 20px;
+		border-top-left-radius: 20px;
+		border-bottom-right-radius: 0;
+	}
+}
+

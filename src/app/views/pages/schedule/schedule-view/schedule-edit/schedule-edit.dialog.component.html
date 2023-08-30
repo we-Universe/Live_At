@@ -1,0 +1,223 @@
+<div class="kt-portlet" [ngClass]="{ 'kt-portlet--body-progress kt-portlet--body-progress-overlay' : viewLoading }"
+	dir="rtl" style="text-align: right;">
+	<div class="kt-portlet__head kt-portlet__head__custom">
+		<div class="kt-portlet__head-label">
+			<h3 class="kt-portlet__head-title">{{getTitle()}}</h3>
+		</div>
+	</div>
+	<form class="kt-form" [formGroup]="scheduleForm">
+		<div class="kt-portlet__body">
+
+			<div class="kt-portlet__body-progress">
+				<mat-spinner [diameter]="20"></mat-spinner>
+			</div>
+
+			<kt-alert *ngIf="hasFormErrors" type="warn" [duration]="10000" [showCloseButton]="true"
+				(close)="onAlertClose($event)">
+				الرجاء تصحيح الأخطاء والمحاولة مجددا
+			</kt-alert>
+
+			<div class="form-group kt-form__group row">
+
+				<!--				<div class="col-lg-4 kt-margin-bottom-20-mobile">-->
+				<!--					<mat-form-field class="mat-form-field-fluid">-->
+				<!--						<input matInput placeholder="اسم البث" formControlName="liveName"/>-->
+				<!--						<mat-error>الرجاء ادخال-->
+				<!--							<strong>اسم البث</strong>-->
+				<!--						</mat-error>-->
+				<!--						<mat-hint align="start">-->
+				<!--							<strong>اسم البث</strong>-->
+				<!--						</mat-hint>-->
+				<!--					</mat-form-field>-->
+				<!--				</div>-->
+
+				<div class="col-lg-4 kt-margin-bottom-20-mobile">
+					<mat-form-field class="mat-form-field-fluid">
+						<mat-select placeholder="صاحب البث" formControlName="merchant">
+							<mat-option [value]="merchant.id" *ngFor="let merchant of merchants">
+								{{merchant.name}}</mat-option>
+						</mat-select>
+						<mat-error>الرجاء ادخال
+							<strong>صاحب البث</strong>
+						</mat-error>
+						<mat-hint align="start">
+							<strong>صاحب البث</strong>
+						</mat-hint>
+					</mat-form-field>
+				</div>
+
+				<div class="col-lg-4 kt-margin-bottom-20-mobile">
+					<mat-form-field class="mat-form-field-fluid">
+						<input matInput placeholder="الجائزة" formControlName="prize" />
+						<mat-error>الرجاء ادخال
+							<strong>الجائزة</strong>
+						</mat-error>
+						<mat-hint align="start">
+							<strong>الجائزة</strong>
+						</mat-hint>
+					</mat-form-field>
+				</div>
+
+				<!--				<div class="col-lg-4 kt-margin-bottom-20-mobile">-->
+				<!--					<mat-form-field class="mat-form-field-fluid">-->
+				<!--						<input matInput placeholder="كود البث" formControlName="code"/>-->
+				<!--						<mat-error>الرجاء ادخال-->
+				<!--							<strong>كود البث</strong>-->
+				<!--						</mat-error>-->
+				<!--						<mat-hint align="start">-->
+				<!--							<strong>كود البث</strong>-->
+				<!--						</mat-hint>-->
+				<!--					</mat-form-field>-->
+				<!--				</div>-->
+
+				<!--
+				<div class="col-lg-4 kt-margin-bottom-20-mobile" *ngIf="this.userschedules.id > 0">
+					<mat-form-field class="mat-form-field-fluid">
+						<mat-select placeholder="حالة البث" formControlName="checkStatus">
+							<mat-option [value]="status.id" *ngFor="let status of statuses">
+								{{status.name}}</mat-option>
+						</mat-select>
+						<mat-error>الرجاء ادخال
+							<strong>حالة البث</strong>
+						</mat-error>
+						<mat-hint align="start">
+							<strong>حالة البث</strong>
+						</mat-hint>
+					</mat-form-field>
+				</div> -->
+
+				<!--				<div class="col-lg-4 kt-margin-bottom-20-mobile" *ngFor="let answer of userSchedules.liveAnswers">-->
+				<!--					<mat-form-field class="mat-form-field-fluid">-->
+				<!--						&lt;!&ndash;						depend on liveAnswers &ndash;&gt;-->
+				<!--						<input matInput placeholder="الاجابات" formControlName="liveAnswers"/>-->
+				<!--						<mat-error>الرجاء ادخال-->
+				<!--							<strong>الاجابات</strong>-->
+				<!--						</mat-error>-->
+				<!--						<mat-hint align="start">-->
+				<!--							<strong>الاجابات</strong>-->
+				<!--						</mat-hint>-->
+				<!--					</mat-form-field>-->
+				<!--				</div>-->
+
+				<div class="col-lg-4 kt-margin-bottom-10-mobile">
+					<mat-form-field class="mat-form-field-fluid">
+						<input matInput type="datetime-local" formControlName="liveFromDate" required
+							style="color: black;">
+						<mat-hint align="start">
+							<strong>تاريخ بداية البث</strong>
+						</mat-hint>
+					</mat-form-field>
+				</div>
+
+				<div class="form-group col-lg-4 kt-margin-bottom-10-mobile">
+					<mat-form-field class="mat-form-field-fluid">
+						<mat-select placeholder="حالة البث" formControlName="isActive">
+							<mat-option [value]="true">
+								فعال
+							</mat-option>
+							<mat-option [value]="false">
+								غير فعال
+							</mat-option>
+						</mat-select>
+						<mat-error>الرجاء اختيار
+							<strong>حالة البث</strong>
+						</mat-error>
+						<mat-hint align="start">
+							<strong>حالة البث</strong>
+						</mat-hint>
+					</mat-form-field>
+				</div>
+
+				<div class="col-lg-4 kt-margin-bottom-10-mobile">
+					<mat-form-field class="mat-form-field-fluid">
+						<input matInput type="datetime-local" formControlName="liveToDate" required
+							style="color: black;">
+						<mat-hint align="start">
+							<strong>تاريخ نهاية البث</strong>
+						</mat-hint>
+					</mat-form-field>
+				</div>
+				<div class="col-lg-12 kt-margin-bottom-20-mobile">
+					<mat-form-field class="mat-form-field-fluid">
+						<input matInput placeholder="سؤال البث" formControlName="liveQuestion" />
+						<mat-error>الرجاء ادخال
+							<strong>سؤال البث</strong>
+						</mat-error>
+						<mat-hint align="start">
+							<strong>سؤال البث</strong>
+						</mat-hint>
+					</mat-form-field>
+				</div>
+			</div>
+
+			<form class="kt-form" [formGroup]="answers[i].validator"
+				*ngFor="let element of numberOfAnswers; let i = index">
+				<div class="form-group kt-form__group row">
+					<div class="col-lg-12 kt-margin-bottom-20-mobile">
+						<mat-form-field class="mat-form-field-fluid">
+							<input matInput type="text" placeholder="نص الاختيار" formControlName="answer"
+								[(ngModel)]="answers[i].text" />
+							<mat-error>الرجاء ادخال
+								<strong>نص الاختيار</strong>
+							</mat-error>
+							<mat-hint align="start">
+								الرجاء ادخال
+								<strong>نص الاختيار</strong>
+							</mat-hint>
+						</mat-form-field>
+						<span class="material-icons close" (click)="deleteAnswer(i)" *ngIf="numberOfAnswers.length > 2">
+								close
+						</span>
+					</div>
+				</div>
+				<div class="kt-separator kt-separator--dashed" *ngIf="i < numberOfAnswers.length - 1"
+					style="margin-bottom: 0;"></div>
+			</form>
+
+			<div class="row text-left">
+				<div class="col-lg-12">
+					<button type="button" style="margin: 5px; min-width: 60px;" class="btn btn-outline-danger"
+						(click)="resetAnswers()">
+						اعادة ضبط
+					</button>
+					<button type="button" style="margin: 5px; min-width: 60px;" class="btn btn-primary"
+						(click)="addAnswer()">
+						اضافة اختيار اخر
+					</button>
+				</div>
+
+				<div class="col-lg-4 kt-margin-bottom-20-mobile">
+					<mat-form-field class="mat-form-field-fluid">
+						<mat-select placeholder="رقم الاجابة الصحيحة" formControlName="correctAnswer">
+							<mat-option [value]="(i+1).toString()"
+								*ngFor="let status of numberOfAnswers; let i = index">
+								{{i + 1}}</mat-option>
+						</mat-select>
+						<mat-error>الرجاء اختيار
+							<strong>رقم الاجابة الصحيحة</strong>
+						</mat-error>
+						<mat-hint align="start">
+							<strong>رقم الاجابة الصحيحة</strong>
+						</mat-hint>
+					</mat-form-field>
+				</div>
+			</div>
+			<!-- <div class="kt-separator kt-separator--dashed"></div> -->
+		</div>
+		<div class="kt-portlet__foot kt-portlet__no-border kt-portlet__foot--fit">
+			<div class="kt-form__actions kt-form__actions--solid p-3">
+				<div class="row text-left">
+					<div class="col-lg-12">
+						<button type="button" style="margin: 5px; min-width: 60px;" class="btn btn-outline-danger"
+							mat-dialog-close cdkFocusInitial>الغاء
+						</button>
+						<button type="button" style="margin: 5px; min-width: 60px;" class="btn btn-primary"
+							(click)="onSubmit()" [disabled]="viewLoading" matTooltip="{{getTitle()}}">
+							تأكيد
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>

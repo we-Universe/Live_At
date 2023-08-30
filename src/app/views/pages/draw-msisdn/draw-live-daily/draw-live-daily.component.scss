@@ -1,0 +1,12 @@
+:host {
+	::ng-deep {
+		ngb-tabset > .nav-tabs {
+			display: none;
+		}
+	}
+}
+
+[class^="flaticon-"]:before, [class*=" flaticon-"]:before {
+	line-height: 2 !important;
+}
+

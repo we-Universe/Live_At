@@ -1,0 +1,28 @@
+:host {
+	width: 100%;
+
+	.kt-header-menu-wrapper {
+		height: 100%;
+	}
+
+	.kt-header-menu-wrapper--on {
+		right: 0 !important;
+		left: auto !important;
+	}
+}
+
+.custom-icon {
+	width: 20px !important;
+	font-size: 12px !important;
+	color: #6c7293;
+}
+
+.custom-item:hover {
+	.custom-icon {
+		color: #5d78ff;
+	}
+}
+
+// .submenu-link {
+// 	background-color: ;
+// }

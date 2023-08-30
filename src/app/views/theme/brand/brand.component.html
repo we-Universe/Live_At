@@ -1,0 +1,17 @@
+<!-- begin:: Brand -->
+<div class="kt-aside__brand kt-grid__item" [ngClass]="htmlClassService.getClasses('brand', true)" id="kt_aside_brand" style="background: transparent;">
+	<div class="kt-aside__brand-logo">
+		<a href="javascript:;" routerLink="/" style="color: white;">
+			<!-- <img alt="logo" [attr.src]="headerLogo" height="50" width="50" style="border-radius: 50%;"/> -->
+			لايفات
+		</a>
+	</div>
+	<div class="kt-aside__brand-tools">
+		<button ktToggle [options]="toggleOptions"
+			class="kt-aside__brand-aside-toggler kt-aside__brand-aside-toggler--left" id="kt_aside_toggler">
+			<span [inlineSVG]="'./assets/media/icons/svg/Navigation/Angle-double-right.svg'"></span>
+			<span [inlineSVG]="'./assets/media/icons/svg/Navigation/Angle-double-left.svg'"></span>
+		</button>
+	</div>
+</div>
+<!-- end:: Brand -->

@@ -1,0 +1,46 @@
+<div class="modal-header">
+	<h4 class="modal-title">New Appointemnt!</h4>
+	<button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+		<span aria-hidden="true">&times;</span>
+	</button>
+</div>
+<div class="modal-body">
+	<form class="formContainer">
+		<p>Is the appointment for an old or new patient?</p>
+		<mat-slide-toggle [(ngModel)]="formData.newPatient" name="newPatient">
+			{{formData.newPatient ? 'New Patient' : 'Old Patient'}}
+		</mat-slide-toggle>
+		<hr />
+		<p>Info</p>
+		<mat-form-field *ngIf="!formData.newPatient">
+			<mat-select placeholder="Choose a patient" [(ngModel)]="formData.patientId" name="patientId"
+				[formControl]="patientId" required>
+				<mat-option [value]="patient.id" *ngFor="let patient of patients">{{patient.name}}</mat-option>
+			</mat-select>
+			<mat-error *ngIf="patientId.invalid">Please choose a patient</mat-error>
+		</mat-form-field>
+		<mat-form-field *ngIf="formData.newPatient">
+			<input matInput placeholder="Patient Name" [(ngModel)]="formData.patientName" name="patientName"
+				[formControl]="patientName" required>
+			<mat-error *ngIf="patientName.invalid">Please enter a patient name</mat-error>
+		</mat-form-field>
+		<!-- <mat-form-field>
+				<textarea matInput placeholder="Textarea"></textarea>
+			</mat-form-field> -->
+		<br />
+		<mat-form-field>
+			<input matInput type="datetime-local" placeholder="Appointment date" [(ngModel)]="formData.appointmentDate"
+				name="appointemntDate" [formControl]="appointmentDate" required>
+			<mat-error *ngIf="appointmentDate.invalid">Please choose a date</mat-error>
+		</mat-form-field>
+	</form>
+</div>
+<div class="modal-footer">
+	<button type="button" class="btn btn-outline-danger" (click)="activeModal.close('Close click')">Close</button>
+	<button type="button" class="btn btn-primary" (click)="addAppointment()" [disabled]="appointmentDate.invalid ||
+		(formData.newPatient && patientName.invalid) || (!formData.newPatient &&  patientId.invalid)"
+		[ngStyle]="{cursor: appointmentDate.invalid ||
+			(formData.newPatient && patientName.invalid) || (!formData.newPatient &&  patientId.invalid) ? 'not-allowed' : 'pointer'}">
+		Add Appointemnt
+	</button>
+</div>

@@ -1,0 +1,177 @@
+<kt-portlet>
+	<!-- See prop => '../../_core/models/data-sources/_base.datasource.ts' (loading$) -->
+	<!-- [viewLoading$]="isLoadingResults" -->
+	<kt-portlet-header [class]="'kt-portlet__head--lg'">
+		<!-- PORTLET LOADING | Binded to TABLE Datasource -->
+
+		<ng-container ktPortletTitle>
+			<h3 class="kt-portlet__head-title">
+				<span>المؤثرين</span>
+			</h3>
+			<!-- For localisations we use @ngx-translate | See off. documentations => https://github.com/ngx-translate/core -->
+			<!-- Localization libraries (en/fr) are here => '../../../.././config/i18n/en.ts|fr.ts' -->
+		</ng-container>
+
+		<ng-container ktPortletTools>
+			<button (click)="addInfluencer()" mat-raised-button matTooltip="مؤثر جديد" color="primary" type="button">
+				<span>اضافة مؤثر</span>
+			</button>
+			<!-- Buttons (Material Angular) | See off.documenations 'https://material.angular.io/components/button/overview' -->
+			<!-- mat-raised-button | Rectangular contained button w/ elevation  -->
+		</ng-container>
+	</kt-portlet-header>
+	<!-- end::Header -->
+
+	<kt-portlet-body>
+		<!-- start::FILTERS & GROUP ACTIONS -->
+		<div class="kt-form">
+			<!-- start::FILTERS -->
+			<div class="kt-form__filtration">
+				<div class="row align-items-center">
+
+<!--					<div class="col-md-4 col-lg-3 kt-margin-bottom-10-mobile" style="margin-top: -10px;">-->
+<!--						<mat-form-field class="mat-form-field-fluid">-->
+<!--							<input matInput placeholder="بحث في جميع الحقول" #searchInput>-->
+<!--							<mat-hint align="start">-->
+<!--								<strong>بحث</strong>-->
+<!--							</mat-hint>-->
+<!--						</mat-form-field>-->
+<!--					</div>-->
+
+					<!-- <div class="col-md-4 col-lg-3 kt-margin-bottom-10-mobile">
+						<div class="kt-form__control">
+							<mat-form-field class="mat-form-field-fluid">
+								<mat-select [(value)]="selectedInfluencerstatus">
+									<mat-option value="">الكل</mat-option>
+									<mat-option [value]="status.id" *ngFor="let status of statuses">{{status.name}}
+									</mat-option>
+								</mat-select>
+								<mat-hint align="start">
+									اختر <strong>حالة المؤثر</strong>
+								</mat-hint>
+							</mat-form-field>
+						</div>
+					</div> -->
+
+<!--					<div class="col-md-4 col-lg-3 kt-margin-bottom-10-mobile">-->
+<!--						<div class="kt-form__control">-->
+<!--							<mat-form-field class="mat-form-field-fluid">-->
+<!--								<input matInput type="datetime-local" [(ngModel)]="dateFrom" name="dateFrom" required-->
+<!--									style="color: black;">-->
+<!--								<mat-hint align="start">-->
+<!--									اختر <strong>بداية الفترة</strong>-->
+<!--								</mat-hint>-->
+<!--							</mat-form-field>-->
+<!--						</div>-->
+<!--					</div>-->
+
+<!--					<div class="col-md-4 col-lg-3 kt-margin-bottom-10-mobile">-->
+<!--						<div class="kt-form__control">-->
+<!--							<mat-form-field class="mat-form-field-fluid">-->
+<!--								<input matInput type="datetime-local" [(ngModel)]="dateTo" name="dateTo" required-->
+<!--									style="color: black;">-->
+<!--								<mat-hint align="start">-->
+<!--									اختر <strong>نهاية الفترة</strong>-->
+<!--								</mat-hint>-->
+<!--							</mat-form-field>-->
+<!--						</div>-->
+<!--					</div>-->
+
+				</div>
+				<button (click)="loadInfluencersList()" mat-raised-button matTooltip="" color="primary"
+					type="button">
+					<span>بحث</span>
+				</button>
+			</div>
+			<!-- end::FILTERS -->
+		</div>
+		<!-- end::FILTERS & GROUP ACTIONS -->
+
+		<!-- start::Summary -->
+		<!-- <div *ngIf="dataSource.data.length > 0">
+			<div class="form-group kt-form__group row m-0">
+				<div class="col-md-6 mb-0">
+					<ngb-alert type="info" [dismissible]="false">
+						مجموع رصيد المؤثرين: {{totalBalance.toFixed(2)}}
+					</ngb-alert>
+				</div>
+			</div>
+		</div> -->
+		<!-- end::Summary -->
+		<!-- MATERIAL TABLE | Binded to datasources -->
+		<!-- See off.documentations 'https://material.angular.io/components/table/overview' -->
+		<div style="text-align: right;">
+			<button mat-raised-button color="primary" (click)="exporter.exportTable('xlsx',
+			{fileName: getExcelFileName(), sheet: getExcelFileName(), Props: {Author: 'Admin'}})"
+				matTooltip="Excel">تنزيل</button>
+		</div>
+		<div class="mat-table__wrapper">
+			<mat-table class="lmat-elevation-z8" #table [dataSource]="dataSource" matSort #sort1="matSort"
+				matSortActive="InfluencerDate" matSortDirection="asc" matSortDisableClear matTableExporter
+				#exporter="matTableExporter" [hiddenColumns]="[displayedColumns.length - 1]">
+				<ng-container matColumnDef="name">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>الاسم</mat-header-cell>
+					<mat-cell *matCellDef="let influence" dir="ltr" class="align-right">{{influence.name}}</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="trackingCode">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>الكود الخاص</mat-header-cell>
+					<mat-cell *matCellDef="let influence">{{influence.trackingCode}}</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="numberOfSubscribers">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>عدد المشتركين</mat-header-cell>
+					<mat-cell *matCellDef="let influence">{{influence.numberOfSubscribers}}</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="creationDate">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>تاريخ اضافة المؤثر</mat-header-cell>
+					<mat-cell *matCellDef="let influence" dir="ltr" class="align-right">{{influence.creationDate}}</mat-cell>
+				</ng-container>
+<!--
+				<ng-container matColumnDef="Influencerstatus">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>حالة المؤثر</mat-header-cell>
+					<mat-cell *matCellDef="let influence">
+						<span (click)="transferInfluencer(influence)"
+							[ngStyle]="{cursor: influence.InfluencerstatusId !== 3 ? 'pointer' : 'auto'}"
+							class="kt-badge kt-badge--inline kt-badge--pill kt-badge--{{ getItemCssClassByStatus(influence.InfluencerstatusId) }} kt-badge--wide">{{
+							influence.Influencerstatus }}</span>
+					</mat-cell>
+				</ng-container> -->
+
+				<ng-container matColumnDef="actions">
+					<mat-header-cell *matHeaderCellDef class="actionsColumn">تعديل</mat-header-cell>
+					<mat-cell *matCellDef="let influence" class="actionsColumn">
+						<button mat-icon-button style="color: #5d78ff" color="info" matTooltip="تعديل" (click)="editInfluencer(influence)">
+							<mat-icon>create</mat-icon>
+						</button>&nbsp;
+<!--						<button mat-icon-button color="warn" matTooltip="حذف" type="button"-->
+						<!--							(click)="deleteInfluencer(influence)">-->
+						<!--							<mat-icon>delete</mat-icon>-->
+						<!--						</button>&nbsp;-->
+					</mat-cell>
+				</ng-container>
+
+				<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+				<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+			</mat-table>
+			<!-- Message for empty data  -->
+			<div class="mat-table__message" *ngIf="!dataSource.data.length">{{languageText.empty}}</div>
+			<div class="mat-table__message" *ngIf="isLoadingResults">{{languageText.searching}}</div>
+		</div>
+
+		<!-- start: BOTTOM -->
+		<div class="mat-table__bottom">
+			<!-- MATERIAL SPINNER | Url: 'https://material.angular.io/components/progress-spinner/overview' -->
+			<mat-spinner [diameter]="20" *ngIf="isLoadingResults"></mat-spinner>
+			<!-- MATERIAL PAGINATOR | Binded to dasources -->
+			<!-- See off.documentations 'https://material.angular.io/components/paginator/overview' -->
+			<mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 100, dataSource.data.length]"
+				[length]="dataSource.data.length" [showFirstLastButtons]="true"></mat-paginator>
+		</div>
+		<!-- end: BOTTOM -->
+	</kt-portlet-body>
+	<!-- end::Body -->
+
+</kt-portlet>

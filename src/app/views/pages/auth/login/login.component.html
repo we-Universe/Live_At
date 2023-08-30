@@ -1,0 +1,159 @@
+<!--begin::Head-->
+<div class="kt-login__head">
+	<span class="kt-login__signup-label"></span>&nbsp;&nbsp;
+	<a href="javascript:;" routerLink="/auth/register" class="kt-link kt-login__signup-link">اعلن عن صفحاتك، فيس بوك و
+		انستجرام</a>
+</div>
+<!--end::Head-->
+
+<!--begin::Body-->
+<!-- <a href="javascript:;" class="kt-login__logo" style="float: right;">
+	<img src="./assets/media/logos/logo-4.png" alt="">
+</a> -->
+<div class="kt-login__body" dir="rtl" style="text-align: right;">
+	<!--begin::Signin-->
+	<div class="kt-login__form">
+		<div class="kt-login__title">
+			<!--			<a href="javascript:;" class="kt-login__logo">-->
+			<!--				<img src="./assets/media/logos/funny-gas-jockey.jpg" height="100" width="100" alt="">-->
+			<!--			</a>-->
+			<h3>لايفات</h3>
+			<h3>تسجيل الدخول</h3>
+		</div>
+
+		<div class="alert alert-primary" role="alert" #alertNotice>
+			<div class="alert-text" [innerHTML]="'الرجاء ادخال المعلومات التالية'"></div>
+		</div>
+
+		<!--begin::Form-->
+		<form class="kt-form" [formGroup]="loginForm" autocomplete="off">
+			<span>
+				<div class="form-group" *ngIf="noAccount">
+					<div class="form-group">
+						<mat-form-field>
+							<mat-label>الاسم الرباعي</mat-label>
+							<input matInput type="text" placeholder="الاسم الرباعي" formControlName="fullname" />
+							<mat-error *ngIf="isControlHasError('fullname','required')">
+								<strong>الرجاء ادخال الاسم الرباعي</strong>
+							</mat-error>
+						</mat-form-field>
+					</div>
+					<mat-form-field>
+						<mat-label>الايميل</mat-label>
+						<input matInput type="email" placeholder="الايميل" formControlName="email" autocomplete="off" />
+						<mat-error *ngIf="isControlHasError('email','required')">
+							<strong>الرجاء ادخال الايميل</strong>
+						</mat-error>
+						<mat-error *ngIf="isControlHasError('email','email')">
+							<strong>الرجاء ادخال ايميل صحيح</strong>
+						</mat-error>
+					</mat-form-field>
+				</div>
+			</span>
+			<div class="form-group">
+				<mat-form-field>
+					<mat-label>رقم الهاتف المحمول</mat-label>
+					<input matInput type="text" placeholder="رقم الهاتف المحمول" formControlName="mobileNumber"
+						autocomplete="off" />
+					<mat-error *ngIf="isControlHasError('mobileNumber','required')">
+						<strong>الرجاء ادخال رقم الهاتف المحمول</strong>
+					</mat-error>
+					<mat-error *ngIf="isControlHasError('mobileNumber','pattern')">
+						<strong>يجب على رقم الهاتف المحمول ان يتكون من ارقام فقط</strong>
+					</mat-error>
+					<mat-error
+						*ngIf="isControlHasError('mobileNumber','minlength') && !isControlHasError('mobileNumber','pattern')">
+						<strong>يجب على رقم الهاتف المحمول ان يتكون على الاقل من 9 خانات</strong>
+					</mat-error>
+					<mat-error
+						*ngIf="isControlHasError('mobileNumber','maxlength') && !isControlHasError('mobileNumber','pattern')">
+						<strong>يجب على رقم الهاتف المحمول ان يتكون على الاكثر من 14 خانة</strong>
+					</mat-error>
+				</mat-form-field>
+			</div>
+			<div class="form-group">
+				<mat-form-field>
+					<mat-label>كلمة السر</mat-label>
+					<input matInput type="password" placeholder="كلمة السر" formControlName="password"
+						autocomplete="off" />
+					<mat-error *ngIf="isControlHasError('password','required')">
+						<strong>الرجاء ادخال كلمة السر</strong>
+					</mat-error>
+					<mat-error *ngIf="isControlHasError('password','minlength')">
+						<strong>يجب على كلمة السر ان يتكون على الاقل من 6 خانات</strong>
+					</mat-error>
+					<mat-error *ngIf="isControlHasError('password','maxlength')">
+						<strong>يجب على كلمة السر ان يتكون على الاكثر من 20 خانة</strong>
+					</mat-error>
+				</mat-form-field>
+			</div>
+			<div class="form-group" *ngIf="noAccount">
+				<mat-form-field>
+					<mat-label> تأكيد كلمة السر</mat-label>
+					<input matInput type="password" placeholder="تأكيد كلمة السر" formControlName="confirmPassword"
+						autocomplete="off" />
+					<mat-error *ngIf="isControlHasError('confirmPassword','required')">
+						<strong>الرجاء ادخال كلمة السر</strong>
+					</mat-error>
+					<mat-error *ngIf="isControlHasError('confirmPassword','minlength')">
+						<strong>يجب على كلمة السر ان يتكون على الاقل من 6 خانات</strong>
+					</mat-error>
+					<mat-error *ngIf="isControlHasError('confirmPassword','maxlength')">
+						<strong>يجب على كلمة السر ان يتكون على الاكثر من 20 خانة</strong>
+					</mat-error>
+					<mat-error
+						*ngIf="loginForm.get('confirmPassword').errors && loginForm.get('confirmPassword').errors.ConfirmPassword">
+						<strong>يجب أن تتطابق كلمتا السر</strong>
+					</mat-error>
+				</mat-form-field>
+			</div>
+			<!--begin::Action-->
+			<kt-auth-notice></kt-auth-notice>
+
+			<div class="kt-login__actions">
+				<a href="javascript:;" (click)="noAccount=!noAccount" class="kt-link kt-login__link-forgot">
+					{{noAccount ? 'عودة الى تسجيل الدخول' : 'لا تمتلك حساب؟ سجل'}}
+				</a>
+				<span></span>
+				<button (click)="submit()"
+					[ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}"
+					id="kt_login_signin_submit" class="btn btn-primary btn-elevate kt-login__btn-primary">
+					{{noAccount ? 'تسجيل' : 'تسجيل الدخول'}}
+				</button>
+			</div>
+			<!--end::Action-->
+		</form>
+		<!--end::Form-->
+<!--		تكلفة الاشتراك هي 1 شيكل شامل الضريبة تدفع كرسوم لمرة واحدة فقط لكل من مشتركي جوال واوريدو-->
+		<!--begin::Divider-->
+		<div class="kt-login__divider">
+			<div class="kt-divider">
+				<span></span>
+				<span>تسجيل الدخول بواسطة</span>
+				<span></span>
+			</div>
+		</div>
+		<!--end::Divider-->
+
+		<!--begin::Options-->
+		<div class="kt-login__options">
+			<a class="btn btn-info kt-btn" style="margin: 5px;" (click)="loginUsingFB()">
+				<b style="margin-top: 5px">Facebook</b>
+				<i class="fab fa-facebook-f"></i>
+			</a>
+
+			<!-- <a href="https://twitter.com/keenthemes/" target="_blank" class="btn btn-info kt-btn">
+				<i class="fab fa-twitter"></i>
+				Twitter
+			</a> -->
+
+			<!--			<a href="javascript:;" class="btn btn-danger kt-btn" style="margin: 5px;">-->
+			<!--				<i class="fab fa-google"></i>-->
+			<!--				&lt;!&ndash; Google &ndash;&gt;-->
+			<!--			</a>-->
+		</div>
+		<!--end::Options-->
+	</div>
+	<!--end::Signin-->
+</div>
+<!--end::Body-->

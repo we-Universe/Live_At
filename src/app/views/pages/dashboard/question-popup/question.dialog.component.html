@@ -1,0 +1,58 @@
+<div class="kt-portlet"
+	 dir="rtl" style="text-align: right;">
+	<div class="kt-portlet__head kt-portlet__head__custom">
+		<div class="kt-portlet__head-label">
+			<h3 class="kt-portlet__head-title">{{getTitle()}}</h3>
+		</div>
+	</div>
+	<mat-dialog-content>
+		<form class="kt-login__form kt-form m-3" [formGroup]="registerForm" autocomplete="off" dir="rtl"
+			  style="text-align: center;" *ngIf="!isDailyQuestion && !(showQuestion | async)">
+			<mat-form-field>
+				<mat-label>رمز البث</mat-label>
+				<input matInput type="text" placeholder="الرجاء ادخال رمز البث" formControlName="pinCode"
+					   autocomplete="off"/>
+				<mat-error *ngIf="isControlHasError('pinCode','required')">
+					<strong>الرجاء ادخال رمز البث</strong>
+				</mat-error>
+				<mat-error *ngIf="isControlHasError('pinCode','pattern')">
+					<strong>يجب على رمز البث ان يتكون من ارقام فقط</strong>
+				</mat-error>
+				<mat-error
+					*ngIf="(isControlHasError('pinCode','minlength') || isControlHasError('pinCode','maxlength')) && !isControlHasError('pinCode','pattern')">
+					<strong>يجب على رمز البث ان يتكون من 4 خانات</strong>
+				</mat-error>
+			</mat-form-field>
+			<!--begin::Action-->
+			<div class="kt-login__actions" align="center">
+				<button type="submit" (click)="getQuestion()" id="kt_login_signin_submit"
+						class="btn btn-primary btn-elevate kt-login__btn-primary"
+						[ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}">تأكيد
+				</button>
+			</div>
+			<!--end::Action-->
+		</form>
+
+		<div *ngIf="showQuestion | async">
+			<div class="customQuestionContainer" *ngIf="!isDailyAnswered">
+				<span class="questionSection">
+					<p>{{questionElements.question.text}}</p>
+					<div class="row">
+						<div class="col-sm-12 col-md-6" *ngFor="let answer of questionElements.answers">
+							<button (click)="answerQuestion(answer.id)" mat-stroked-button color="primary" type="button"
+									style="margin: 10px; color: white;" [ngStyle]="{height: answerWidth + 'px'}">
+								{{answer.text}}</button>
+						</div>
+					</div>
+				</span>
+			</div>
+			<h6 *ngIf="isDailyAnswered" style="color: black; margin: 30px 20px">
+				لقد قمت بالاجابة عن السؤال لهذا اليوم٬ تأكد أنك قمت بعمل إعجاب و متابعة لأكبر عدد ممكن من الصفحات لزيادة
+				فرصك بالسحب
+			</h6>
+		</div>
+	</mat-dialog-content>
+	<mat-dialog-actions align="end">
+		<button mat-button mat-dialog-close class="m-2">اغلاق</button>
+	</mat-dialog-actions>
+</div>

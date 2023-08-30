@@ -1,0 +1,118 @@
+<div class="kt-portlet" [ngClass]="{ 'kt-portlet--body-progress kt-portlet--body-progress-overlay' : viewLoading }"
+	 dir="rtl" style="text-align: right;">
+	<div class="kt-portlet__head kt-portlet__head__custom">
+		<div class="kt-portlet__head-label">
+			<h3 class="kt-portlet__head-title">{{getTitle()}}</h3>
+		</div>
+	</div>
+	<form class="kt-form" [formGroup]="questionForm">
+		<div class="kt-portlet__body">
+
+			<div class="kt-portlet__body-progress">
+				<mat-spinner [diameter]="20"></mat-spinner>
+			</div>
+
+			<kt-alert *ngIf="hasFormErrors" type="warn" [duration]="10000" [showCloseButton]="true"
+					  (close)="onAlertClose($event)">
+				الرجاء تصحيح الأخطاء والمحاولة مجددا
+			</kt-alert>
+
+			<div class="form-group kt-form__group row">
+				<!--
+								<div class="col-lg-4 kt-margin-bottom-10-mobile">
+									<mat-form-field class="mat-form-field-fluid">
+										<input matInput type="datetime-local" formControlName="questionCreationDate" required
+											style="color: black;">
+										<mat-hint align="start">
+											<strong>تاريخ السؤال</strong>
+										</mat-hint>
+									</mat-form-field>
+								</div> -->
+
+				<div class="col-lg-12 kt-margin-bottom-20-mobile">
+					<mat-form-field class="mat-form-field-fluid">
+						<input matInput placeholder="ادخل سؤال" formControlName="questionText"/>
+						<mat-error>الرجاء ادخال
+							<strong>سؤال</strong>
+						</mat-error>
+						<mat-hint align="start">
+							<strong>سؤال</strong>
+						</mat-hint>
+					</mat-form-field>
+				</div>
+			</div>
+
+			<form class="kt-form" [formGroup]="answers[i].validator"
+				  *ngFor="let element of numberOfAnswers; let i = index">
+				<div class="form-group kt-form__group row">
+					<div class="col-lg-12 kt-margin-bottom-20-mobile">
+						<mat-form-field class="mat-form-field-fluid">
+							<input matInput type="text" placeholder="نص الاختيار"
+								   formControlName="answer"
+								   [(ngModel)]="answers[i].text"/>
+							<mat-error>الرجاء ادخال
+								<strong>نص الاختيار</strong>
+							</mat-error>
+							<mat-hint align="start">
+								الرجاء ادخال
+								<strong>نص الاختيار</strong>
+							</mat-hint>
+						</mat-form-field>
+						<span class="material-icons close" (click)="deleteAnswer(i)" *ngIf="numberOfAnswers.length > 2">
+								close
+						</span>
+					</div>
+				</div>
+				<div class="kt-separator kt-separator--dashed" *ngIf="i < numberOfAnswers.length - 1"
+					 style="margin-bottom: 0;"></div>
+			</form>
+
+			<div class="row text-left">
+				<div class="col-lg-12">
+					<button type="button" style="margin: 5px; min-width: 60px;" class="btn btn-outline-danger"
+							(click)="resetAnswers()">
+						اعادة ضبط
+					</button>
+					<button type="button" style="margin: 5px; min-width: 60px;" class="btn btn-primary"
+							(click)="addAnswer()">
+						اضافة اختيار اخر
+					</button>
+				</div>
+
+				<div class="col-lg-4 kt-margin-bottom-20-mobile">
+					<mat-form-field class="mat-form-field-fluid">
+						<mat-select placeholder="رقم الاجابة الصحيحة" formControlName="correctAnswer">
+							<mat-option [value]="(i+1).toString()"
+										*ngFor="let status of numberOfAnswers; let i = index">
+								{{i + 1}}</mat-option>
+						</mat-select>
+						<mat-error>الرجاء اختيار
+							<strong>رقم الاجابة الصحيحة</strong>
+						</mat-error>
+						<mat-hint align="start">
+							<strong>رقم الاجابة الصحيحة</strong>
+						</mat-hint>
+					</mat-form-field>
+				</div>
+			</div>
+
+		</div>
+		<!-- <div class="kt-separator kt-separator--dashed"></div> -->
+
+		<div class="kt-portlet__foot kt-portlet__no-border kt-portlet__foot--fit">
+			<div class="kt-form__actions kt-form__actions--solid p-3">
+				<div class="row text-left">
+					<div class="col-lg-12">
+						<button type="button" style="margin: 5px; min-width: 60px;" class="btn btn-outline-danger"
+								mat-dialog-close cdkFocusInitial>الغاء
+						</button>
+						<button type="button" style="margin: 5px; min-width: 60px;" class="btn btn-primary"
+								(click)="onSubmit()" [disabled]="viewLoading" matTooltip="{{getTitle()}}">
+							تأكيد
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>

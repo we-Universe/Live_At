@@ -1,0 +1,13 @@
+<div class="kt-mat-snackbar" dir="rtl" style="position: relative;">
+	<div class="kt-mat-snackbar__message" style="text-align: right">{{data.message}}</div>
+	<div class="kt-mat-snackbar__btn">
+		<button *ngIf="data.showUndoButton && false" type="button" mat-button color="primary" (click)="onDismissWithAction()">
+			خروج
+		</button>
+	</div>
+	<div class="kt-mat-snackbar__close" style="position: absolute; left: -10px;">
+		<button *ngIf="data.showCloseButton" mat-icon-button (click)="onDismiss()" color="warn">
+			<mat-icon>clear</mat-icon>
+		</button>
+	</div>
+</div>

@@ -1,0 +1,217 @@
+<kt-portlet>
+	<!-- See prop => '../../_core/models/data-sources/_base.datasource.ts' (loading$) -->
+	<!-- [viewLoading$]="isLoadingResults" -->
+	<kt-portlet-header [class]="'kt-portlet__head--lg'">
+		<!-- PORTLET LOADING | Binded to TABLE Datasource -->
+
+		<ng-container ktPortletTitle>
+			<h3 class="kt-portlet__head-title">
+				<span>المعلنين</span>
+			</h3>
+			<!-- For localisations we use @ngx-translate | See off. documentations => https://github.com/ngx-translate/core -->
+			<!-- Localization libraries (en/fr) are here => '../../../.././config/i18n/en.ts|fr.ts' -->
+		</ng-container>
+
+		<ng-container ktPortletTools>
+			<button (click)="addMerchant()" mat-raised-button matTooltip="معلن جديد" color="primary" type="button">
+				<span>اضافة معلن</span>
+			</button>
+			<!-- Buttons (Material Angular) | See off.documenations 'https://material.angular.io/components/button/overview' -->
+			<!-- mat-raised-button | Rectangular contained button w/ elevation  -->
+		</ng-container>
+	</kt-portlet-header>
+	<!-- end::Header -->
+
+	<kt-portlet-body>
+		<!-- start::FILTERS & GROUP ACTIONS -->
+		<div class="kt-form">
+			<!-- start::FILTERS -->
+			<div class="kt-form__filtration">
+				<div class="row align-items-center">
+
+<!--					<div class="col-md-4 col-lg-3 kt-margin-bottom-10-mobile" style="margin-top: -10px;">-->
+<!--						<mat-form-field class="mat-form-field-fluid">-->
+<!--							<input matInput placeholder="بحث في جميع الحقول" #searchInput>-->
+<!--							<mat-hint align="start">-->
+<!--								<strong>بحث</strong>-->
+<!--							</mat-hint>-->
+<!--						</mat-form-field>-->
+<!--					</div>-->
+
+					<!-- <div class="col-md-4 col-lg-3 kt-margin-bottom-10-mobile">
+						<div class="kt-form__control">
+							<mat-form-field class="mat-form-field-fluid">
+								<mat-select [(value)]="selectedMerchantstatus">
+									<mat-option value="">الكل</mat-option>
+									<mat-option [value]="status.id" *ngFor="let status of statuses">{{status.name}}
+									</mat-option>
+								</mat-select>
+								<mat-hint align="start">
+									اختر <strong>حالة المعلن</strong>
+								</mat-hint>
+							</mat-form-field>
+						</div>
+					</div> -->
+
+<!--					<div class="col-md-4 col-lg-3 kt-margin-bottom-10-mobile">-->
+					<!--						<div class="kt-form__control">-->
+					<!--							<mat-form-field class="mat-form-field-fluid">-->
+					<!--								<input matInput type="datetime-local" [(ngModel)]="dateFrom" name="dateFrom" required-->
+					<!--									   style="color: black;">-->
+					<!--								<mat-hint align="start">-->
+					<!--									اختر <strong>بداية الفترة</strong>-->
+					<!--								</mat-hint>-->
+					<!--							</mat-form-field>-->
+					<!--						</div>-->
+					<!--					</div>-->
+
+					<!--					<div class="col-md-4 col-lg-3 kt-margin-bottom-10-mobile">-->
+					<!--						<div class="kt-form__control">-->
+					<!--							<mat-form-field class="mat-form-field-fluid">-->
+					<!--								<input matInput type="datetime-local" [(ngModel)]="dateTo" name="dateTo" required-->
+					<!--									   style="color: black;">-->
+					<!--								<mat-hint align="start">-->
+					<!--									اختر <strong>نهاية الفترة</strong>-->
+					<!--								</mat-hint>-->
+					<!--							</mat-form-field>-->
+					<!--						</div>-->
+					<!--					</div>-->
+
+				</div>
+				<button (click)="loadMerchantsList()" mat-raised-button matTooltip="" color="primary"
+						type="button">
+					<span>بحث</span>
+				</button>
+			</div>
+			<!-- end::FILTERS -->
+		</div>
+		<!-- end::FILTERS & GROUP ACTIONS -->
+
+		<!-- start::Summary -->
+		<!-- <div *ngIf="dataSource.data.length > 0">
+			<div class="form-group kt-form__group row m-0">
+				<div class="col-md-6 mb-0">
+					<ngb-alert type="info" [dismissible]="false">
+						مجموع رصيد المعلنين: {{totalBalance.toFixed(2)}}
+					</ngb-alert>
+				</div>
+			</div>
+		</div> -->
+		<!-- end::Summary -->
+		<!-- MATERIAL TABLE | Binded to datasources -->
+		<!-- See off.documentations 'https://material.angular.io/components/table/overview' -->
+		<div style="text-align: right;">
+			<button mat-raised-button color="primary" (click)="exporter.exportTable('xlsx',
+			{fileName: getExcelFileName(), sheet: getExcelFileName(), Props: {Author: 'Admin'}})"
+					matTooltip="Excel">تنزيل
+			</button>
+		</div>
+		<div class="mat-table__wrapper">
+			<mat-table class="lmat-elevation-z8" #table [dataSource]="dataSource" matSort #sort1="matSort"
+					   matSortActive="MerchantDate" matSortDirection="asc" matSortDisableClear matTableExporter
+					   #exporter="matTableExporter" [hiddenColumns]="[displayedColumns.length - 1]">
+					   
+				<ng-container matColumnDef="mobileNumber">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>رقم الهاتف</mat-header-cell>
+					<mat-cell *matCellDef="let merchant" dir="ltr"
+							  class="align-right">{{merchant.mobileNumber}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="fullname">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>الاسم الكامل</mat-header-cell>
+					<mat-cell *matCellDef="let merchant" dir="ltr"
+							  class="align-right">{{merchant.fullname}}</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="email">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>الايميل</mat-header-cell>
+					<mat-cell *matCellDef="let merchant" dir="ltr"
+							  class="align-right">{{merchant.email}}</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="storeName">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>اسم المحل</mat-header-cell>
+					<mat-cell *matCellDef="let merchant" dir="ltr"
+							  class="align-right">{{merchant.storeName}}</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="fbUrl">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>عنوان الفيس بوك</mat-header-cell>
+					<mat-cell *matCellDef="let merchant" dir="ltr"
+							  class="align-right">{{merchant.fbUrl}}</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="insUrl">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>عنوان الانستغرام</mat-header-cell>
+					<mat-cell *matCellDef="let merchant" dir="ltr"
+							  class="align-right">{{merchant.insUrl}}</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="storeType">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>تصنيف المحل و اختصاصه</mat-header-cell>
+					<mat-cell *matCellDef="let merchant" dir="ltr"
+							  class="align-right">{{merchant.storeType}}</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="storeIntro">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>تعريف بالمحل</mat-header-cell>
+					<mat-cell *matCellDef="let merchant" dir="ltr"
+							  class="align-right">{{merchant.storeIntro}}</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="merchantSubscriptionType">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>نوع الاشتراك</mat-header-cell>
+					<mat-cell *matCellDef="let merchant">{{merchant.merchantSubscriptionType}}</mat-cell>
+				</ng-container>
+
+
+				<ng-container matColumnDef="merchantCreationDate">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>تاريخ اضافة المعلن</mat-header-cell>
+					<mat-cell *matCellDef="let merchant" dir="ltr"
+							  class="align-right">{{merchant.merchantCreationDate}}</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="isActive">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>حالة المعلن</mat-header-cell>
+					<mat-cell *matCellDef="let merchant">
+										<span
+											class="kt-badge kt-badge--inline kt-badge--pill kt-badge--{{ getItemCssClassByStatus(merchant.isActive) }} kt-badge--wide">{{
+                                            getItemStatusString(merchant.isActive) }}</span>
+					</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="actions">
+					<mat-header-cell *matHeaderCellDef class="actionsColumn">تعديل</mat-header-cell>
+					<mat-cell *matCellDef="let merchant" class="actionsColumn">
+						<button mat-icon-button style="color: #5d78ff" color="info" matTooltip="تعديل" (click)="editMerchant(merchant)">
+							<mat-icon>create</mat-icon>
+						</button>&nbsp;
+						<!-- <button mat-icon-button color="warn" matTooltip="حذف" type="button"
+								(click)="deleteMerchant(merchant)">
+							<mat-icon>delete</mat-icon>
+						</button>&nbsp; -->
+					</mat-cell>
+				</ng-container>
+
+				<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+				<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+			</mat-table>
+			<!-- Message for empty data  -->
+			<div class="mat-table__message" *ngIf="!dataSource.data.length">{{languageText.empty}}</div>
+			<div class="mat-table__message" *ngIf="isLoadingResults">{{languageText.searching}}</div>
+		</div>
+
+		<!-- start: BOTTOM -->
+		<div class="mat-table__bottom">
+			<!-- MATERIAL SPINNER | Url: 'https://material.angular.io/components/progress-spinner/overview' -->
+			<mat-spinner [diameter]="20" *ngIf="isLoadingResults"></mat-spinner>
+			<!-- MATERIAL PAGINATOR | Binded to dasources -->
+			<!-- See off.documentations 'https://material.angular.io/components/paginator/overview' -->
+			<mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 100, dataSource.data.length]"
+						   [length]="dataSource.data.length" [showFirstLastButtons]="true"></mat-paginator>
+		</div>
+		<!-- end: BOTTOM -->
+	</kt-portlet-body>
+	<!-- end::Body -->
+
+</kt-portlet>
